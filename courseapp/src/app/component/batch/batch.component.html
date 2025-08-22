@@ -1,0 +1,55 @@
+<h2>Batch Management</h2>
+
+<div>
+  <h3>{{ selectedBatch ? 'Edit Batch' : 'Add New Batch' }}</h3>
+  <form (ngSubmit)="selectedBatch ? onUpdateBatch() : onAddBatch()">
+    <label for="batchName">Batch Name:</label>
+    <input type="text" id="batchName" [(ngModel)]="currentBatch.batchName" name="batchName" required>
+
+    <label for="startDate">Start Date:</label>
+    <input type="date" id="startDate" [(ngModel)]="currentBatch.startDate" name="startDate" required>
+
+    <label for="endDate">End Date:</label>
+    <input type="date" id="endDate" [(ngModel)]="currentBatch.endDate" name="endDate" required>
+
+    <label for="courseId">Course ID:</label>
+    <input type="number" id="courseId" [(ngModel)]="currentBatch.courseId" name="courseId" required>
+
+    <label for="trainerId">Trainer ID:</label>
+    <input type="number" id="trainerId" [(ngModel)]="currentBatch.trainerId" name="trainerId">
+
+    <button type="submit">{{ selectedBatch ? 'Update Batch' : 'Add Batch' }}</button>
+    <button type="button" (click)="resetForm()" *ngIf="selectedBatch">Cancel</button>
+  </form>
+</div>
+
+<hr>
+
+<h3>Batches List</h3>
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Start Date</th>
+      <th>End Date</th>
+      <th>Course ID</th>
+      <th>Trainer ID</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let batch of batches">
+      <td>{{ batch.batchId }}</td>
+      <td>{{ batch.batchName }}</td>
+      <td>{{ batch.startDate | date }}</td>
+      <td>{{ batch.endDate | date }}</td>
+      <td>{{ batch.courseId }}</td>
+      <td>{{ batch.trainerId }}</td>
+      <td>
+        <button (click)="onSelect(batch)">Edit</button>
+        <button (click)="onDeleteBatch(batch.batchId)">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

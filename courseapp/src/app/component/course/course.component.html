@@ -1,0 +1,66 @@
+<div class="container mt-4">
+  <h2 class="mb-3">Course Management</h2>
+
+  <!-- Form -->
+  <form (ngSubmit)="editMode ? updateCourse() : addCourse()" class="mb-4">
+    <div class="mb-3">
+      <label class="form-label">Course Name</label>
+      <input [(ngModel)]="newCourse.courseName" name="courseName" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Description</label>
+      <textarea [(ngModel)]="newCourse.description" name="description" class="form-control" required></textarea>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Duration</label>
+      <input type="number" [(ngModel)]="newCourse.duration" name="duration" class="form-control" required>
+    </div>
+
+    <div class="form-check mb-3">
+      <input type="checkbox" [(ngModel)]="newCourse.isActive" name="isActive" class="form-check-input">
+      <label class="form-check-label">Active</label>
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+      {{ editMode ? 'Update Course' : 'Add Course' }}
+    </button>
+    <button type="button" (click)="resetForm()" class="btn btn-secondary ms-2">Cancel</button>
+  </form>
+
+  <!-- Table -->
+  <table class="table table-bordered table-striped">
+    <thead class="table-dark">
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Duration</th>
+        <th>Created On</th>
+        <th>Modified On</th>
+        <th>Active</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let course of courses">
+        <td>{{ course.courseId }}</td>
+        <td>{{ course.courseName }}</td>
+        <td>{{ course.description }}</td>
+        <td>{{ course.duration }}</td>
+        <td>{{ course.createdOn | date:'short' }}</td>
+        <td>{{ course.modifiedOn ? (course.modifiedOn | date:'short') : '-' }}</td>
+        <td>
+          <span [class.text-success]="course.isActive" [class.text-danger]="!course.isActive">
+            {{ course.isActive ? 'Yes' : 'No' }}
+          </span>
+        </td>
+        <td>
+          <button class="btn btn-sm btn-warning me-2" (click)="editCourse(course)">Edit</button>
+          <button class="btn btn-sm btn-danger" (click)="deleteCourse(course.courseId)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,58 @@
+<div class="container mt-4">
+  <h2 class="mb-3">Trainer Management</h2>
+
+  <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+
+  <!-- Add / Edit Form -->
+  <form (ngSubmit)="saveTrainer()" class="mb-4">
+    <div class="row g-2">
+      <div class="col-md-3">
+        <input type="text" [(ngModel)]="formTrainer.trainerName" name="trainerName" class="form-control" placeholder="Trainer Name" required>
+      </div>
+      <div class="col-md-3">
+        <input type="text" [(ngModel)]="formTrainer.expertise" name="expertise" class="form-control" placeholder="Expertise">
+      </div>
+      <div class="col-md-3">
+        <input type="email" [(ngModel)]="formTrainer.email" name="email" class="form-control" placeholder="Email">
+      </div>
+      <div class="col-md-3">
+        <input type="text" [(ngModel)]="formTrainer.phone" name="phone" class="form-control" placeholder="Phone">
+      </div>
+      <div class="col-md-2 mt-2">
+        <button type="submit" class="btn btn-success w-100">{{ editingTrainer ? 'Update' : 'Add' }}</button>
+      </div>
+      <div class="col-md-2 mt-2" *ngIf="editingTrainer">
+        <button type="button" class="btn btn-secondary w-100" (click)="cancelEdit()">Cancel</button>
+      </div>
+    </div>
+  </form>
+
+  <!-- Trainers Table -->
+  <table class="table table-striped mt-3">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Expertise</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Active</th>
+        <th>Created On</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let trainer of trainers">
+        <td>{{ trainer.trainerName }}</td>
+        <td>{{ trainer.expertise }}</td>
+        <td>{{ trainer.email }}</td>
+        <td>{{ trainer.phone }}</td>
+        <td>{{ trainer.isActive ? 'Yes' : 'No' }}</td>
+        <td>{{ trainer.createdOn | date:'short' }}</td>
+        <td>
+          <button class="btn btn-primary btn-sm me-2" (click)="editTrainer(trainer)">Edit</button>
+          <button class="btn btn-danger btn-sm" (click)="deleteTrainer(trainer.trainerId)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
